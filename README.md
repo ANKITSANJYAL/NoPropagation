@@ -82,7 +82,7 @@ On MNIST, the model achieves **\~99% validation accuracy by epoch 7**, matching 
 
 ### 📈 Accuracy Curve
 
-[Training and Validation Accuracy](assets/MnistNoProp.png)
+![Training and Validation Accuracy](assets/MnistNoProp.png)
 
 And all of this is done **without using backpropagation**.
 
