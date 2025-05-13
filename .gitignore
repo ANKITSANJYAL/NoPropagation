@@ -1,0 +1,29 @@
+# Ignore dataset folders
+data/
+!data/__init__.py
+!data/mnist_loader.py
+
+# PyTorch and Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pt
+*.pth
+*.ipynb_checkpoints
+
+# VSCode or PyCharm
+.vscode/
+.idea/
+
+# Jupyter runtime
+*.checkpoint
+.ipynb_checkpoints/
+*.log
+
+# Output images, experiments
+assets/
+!assets/MnistNoProp.png
+
+# MacOS system files
+.DS_Store
