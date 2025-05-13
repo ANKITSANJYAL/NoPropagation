@@ -84,6 +84,11 @@ On MNIST, the model achieves **\~99% validation accuracy by epoch 7**, matching 
 
 ![Training and Validation Accuracy](assets/MnistNoProp.png)
 
+
+On CIFR-10, the model achieved **\~75% validation accuracy by epoch 50**, whilst it had been trained for just 50 epochs and seems like it can still go on learning
+
+![Training and Validation Accuracy](assets/CIFR_50.png)
+
 And all of this is done **without using backpropagation**.
 
 ---

@@ -9,6 +9,8 @@ def train_nopropdt(model, train_loader, test_loader, epochs, lr, weight_decay, d
     model.train()
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=lr, weight_decay=weight_decay)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=epochs)
+
 
     history = {'train_acc': [], 'val_acc': []}
 
@@ -38,6 +40,7 @@ def train_nopropdt(model, train_loader, test_loader, epochs, lr, weight_decay, d
                 loss.backward()
                 torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
                 optimizer.step()
+                scheduler.step()
 
         # === Train Accuracy ===
         model.eval()

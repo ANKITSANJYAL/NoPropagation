@@ -4,12 +4,12 @@ import torch.nn.functional as F
 import math
 
 class DenoiseBlock(nn.Module):
-    def __init__(self,embedding_dim,num_classes):
+    def __init__(self,embedding_dim,num_classes,num_input_channels=1):
         super().__init__()
 
         # Image Path (CNN)
         self.conv_path = nn.Sequential(
-            nn.Conv2d(1,32,3,padding=1),
+            nn.Conv2d(num_input_channels,32,3,padding=1),
             nn.ReLU(),
             nn.MaxPool2d(2),
             nn.Dropout(0.2),
@@ -72,7 +72,7 @@ class DenoiseBlock(nn.Module):
     
 
 class NoPropDT(nn.Module):
-    def __init__(self, num_classes, embedding_dim, T, eta):
+    def __init__(self, num_classes, embedding_dim, T, eta,num_input_channels=1):
         super().__init__()
         self.num_classes = num_classes
         self.embedding_dim = embedding_dim
@@ -81,7 +81,7 @@ class NoPropDT(nn.Module):
 
         # Stack of Denoising Blocks
         self.blocks = nn.ModuleList([
-            DenoiseBlock(embedding_dim, num_classes) for _ in range(T)
+            DenoiseBlock(embedding_dim, num_classes,num_input_channels) for _ in range(T)
         ])
 
         # Class-embedding matrix
