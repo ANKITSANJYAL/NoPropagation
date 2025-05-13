@@ -116,3 +116,9 @@ This was the MNIST milestone. Next:
 Thanks for checking out the project — if you're into optimization, bio-inspired learning, or just curious about alternatives to backprop, you’ll enjoy digging into this.
 
 PRs and stars are always welcome :)
+
+---
+## 🙏 Credits
+
+This implementation was restructured and extended from a notebook version shared by the community. Special thanks for the inspiration!
+https://github.com/ashishbamania/Tutorials-On-Artificial-Intelligence/blob/main/Training%20Without%20Backpropagation/NoPropDT_on_MNIST.ipynb
