@@ -1,6 +1,8 @@
 # No-Propagation Diffusion Transformer (NoPropDT) on MNIST
 
 This repository contains a clean and complete PyTorch implementation of the **No-Propagation Diffusion Transformer (NoPropDT)** model as described in the paper by researchers from the University of Oxford.
+Paper Link:
+https://arxiv.org/pdf/2503.24322
 
 ---
 
