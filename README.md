@@ -101,43 +101,34 @@ And all of this is done **without using backpropagation**.
 Want to experiment with this or try on your own dataset? Here's how to get started:
 
 Clone the repo:
-
+``` 
 git clone https://github.com/ANKITSANJYAL/NoPropagation.git
 cd NoPropagation
+```
+1) Add a custom dataset loader under data/ (check mnist_loader.py or cifar_loader.py as reference)
 
-Add a custom dataset loader under data/ (check mnist_loader.py or cifar_loader.py as reference)
+2) Write a training script under experiments/ (copy run_mnist_dt.py or run_cifar_dt.py)
 
-Write a training script under experiments/ (copy run_mnist_dt.py or run_cifar_dt.py)
+3) Adjust the model config (e.g. num_input_channels, num_classes, embedding_dim) in the script
 
-Adjust the model config (e.g. num_input_channels, num_classes, embedding_dim) in the script
-
-Run your experiment:
-
+4) Run your experiment:
+```
 PYTHONPATH=. python experiments/your_script.py
-
+```
 This codebase is modular by design — you can plug in new datasets, decoders, schedulers, or compare against backprop baselines.
 
 Open a PR if you add a new experiment, optimizer, or decoder variant. Let's keep improving this together.
 
-🔭 Next Steps for Me
+## 🔭 Next Steps for Me
 
-So far:
 
-✅ MNIST baseline and decoder versions implemented
+1) Add support for SVHN and TinyImageNet
 
-✅ CIFAR-10 baseline and decoder version trained
+2) Add backprop baselines for direct comparison
 
-Coming up:
+3) Integrate WandB tracking for better logs and visualizations
 
-Add support for SVHN and TinyImageNet
-
-Add backprop baselines for direct comparison
-
-Integrate WandB tracking for better logs and visualizations
-
-Try alternative denoising blocks or noise schedules
-
-(Optional) Benchmark memory + training speed vs traditional backprop
+4) Try alternative denoising blocks or noise schedules
 
 
 ---
