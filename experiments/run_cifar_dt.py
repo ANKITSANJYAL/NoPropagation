@@ -28,7 +28,8 @@ def main():
         embedding_dim=embedding_dim,
         T=T,
         eta=eta,
-        num_input_channels=3  # key change
+        num_input_channels=3, # key change
+        use_decoder=True
     )
 
     # Train

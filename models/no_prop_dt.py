@@ -4,8 +4,10 @@ import torch.nn.functional as F
 import math
 
 class DenoiseBlock(nn.Module):
-    def __init__(self,embedding_dim,num_classes,num_input_channels=1):
+    def __init__(self,embedding_dim,num_classes,num_input_channels=1,use_decoder=False):
         super().__init__()
+
+        self.use_decoder = use_decoder
 
         # Image Path (CNN)
         self.conv_path = nn.Sequential(
@@ -51,6 +53,14 @@ class DenoiseBlock(nn.Module):
 
         self.fc_out = nn.Linear(256,num_classes)
 
+        #non linear decoder
+        if self.use_decoder:
+            self.decoder = nn.Sequential(
+                nn.Linear(embedding_dim, embedding_dim),
+                nn.Tanh()
+            )
+
+
     def forward(self, x, z_prev, W_embed):
         x_feat = self.conv_path(x)
 
@@ -67,12 +77,14 @@ class DenoiseBlock(nn.Module):
 
         p = F.softmax(logits, dim=1)
         z_next = p @ W_embed
+        if self.use_decoder:
+            z_next = self.decoder(z_next)
 
         return z_next, logits
     
 
 class NoPropDT(nn.Module):
-    def __init__(self, num_classes, embedding_dim, T, eta,num_input_channels=1):
+    def __init__(self, num_classes, embedding_dim, T, eta,num_input_channels=1,use_decoder=False):
         super().__init__()
         self.num_classes = num_classes
         self.embedding_dim = embedding_dim
@@ -81,7 +93,7 @@ class NoPropDT(nn.Module):
 
         # Stack of Denoising Blocks
         self.blocks = nn.ModuleList([
-            DenoiseBlock(embedding_dim, num_classes,num_input_channels) for _ in range(T)
+            DenoiseBlock(embedding_dim, num_classes,num_input_channels,use_decoder=use_decoder) for _ in range(T)
         ])
 
         # Class-embedding matrix

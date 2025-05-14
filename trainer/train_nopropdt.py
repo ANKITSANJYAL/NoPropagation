@@ -18,6 +18,7 @@ def train_nopropdt(model, train_loader, test_loader, epochs, lr, weight_decay, d
         model.train()
 
         for t in range(model.T):
+            batch_idx = 0
             for x, y in train_loader:
                 x, y = x.to(device), y.to(device)
                 uy = model.W_embed[y]  # Select class embeddings
@@ -27,7 +28,24 @@ def train_nopropdt(model, train_loader, test_loader, epochs, lr, weight_decay, d
                 z_t = torch.sqrt(alpha_bar_t) * uy + torch.sqrt(1 - alpha_bar_t) * noise
 
                 z_pred, _ = model.blocks[t](x, z_t, model.W_embed)
-                loss_l2 = F.mse_loss(z_pred, uy)
+
+                if epoch == 0 and t == 0 and batch_idx == 0:  # first time step, first batch
+                    decoder_output = model.blocks[t].decoder(z_pred)
+                    z_pred_residual = z_pred + decoder_output
+                    print(f"[DEBUG] z_pred norm: {z_pred.norm(dim=1).mean().item():.4f}")
+                    print(f"[DEBUG] decoder(z_pred) norm: {decoder_output.norm(dim=1).mean().item():.4f}")
+                    print(f"[DEBUG] residual output norm: {z_pred_residual.norm(dim=1).mean().item():.4f}")
+                    print(f"[DEBUG] target (uy) norm: {uy.norm(dim=1).mean().item():.4f}")
+
+                batch_idx += 1
+                #apply decoder if enabled 
+                if hasattr(model.blocks[t],'use_decoder') and model.blocks[t].use_decoder:
+                    z_pred_for_loss = z_pred + model.blocks[t].decoder(z_pred)
+
+                else:
+                    z_pred_for_loss = z_pred
+                
+                loss_l2 = F.mse_loss(z_pred_for_loss, uy)
                 loss = 0.5 * model.eta * model.snr_diff[t] * loss_l2
 
                 if t == model.T - 1:

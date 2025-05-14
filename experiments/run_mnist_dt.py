@@ -23,7 +23,7 @@ def main():
     train_loader, test_loader = get_mnist_loaders(batch_size=batch_size)
 
     # Build model
-    model = NoPropDT(num_classes=num_classes, embedding_dim=embedding_dim, T=T, eta=eta)
+    model = NoPropDT(num_classes=num_classes, embedding_dim=embedding_dim, T=T, eta=eta,use_decoder=True)
 
     # Train
     train_nopropdt(model, train_loader, test_loader, epochs, lr, weight_decay, device=device)

@@ -78,43 +78,67 @@ main.py
 
 ## ✅ Results
 
-On MNIST, the model achieves **\~99% validation accuracy by epoch 7**, matching or exceeding what the paper reports.
+On MNIST, the model achieves **~99% validation accuracy by epoch 7**, matching or exceeding what the paper reports.  
+On CIFAR-10, it reaches **~76% validation accuracy by epoch 50**, outperforming earlier linear-only setups.
 
-### 📈 Accuracy Curve
+### 📊 Accuracy Comparisons
 
-![Training and Validation Accuracy](assets/MnistNoProp.png)
-
-
-On CIFR-10, the model achieved **\~75% validation accuracy by epoch 50**, whilst it had been trained for just 50 epochs and seems like it can still go on learning
-
-![Training and Validation Accuracy](assets/CIFR_50.png)
+<table>
+  <tr>
+    <td><b>MNIST</b><br><sub>No Decoder</sub><br><img src="assets/MnistNoProp.png" width="400"/></td>
+    <td><b>MNIST</b><br><sub>With Nonlinear Decoder</sub><br><img src="assets/mnist_decoder.png" width="400"/></td>
+  </tr>
+  <tr>
+    <td><b>CIFAR-10</b><br><sub>No Decoder</sub><br><img src="assets/CIFR_50.png" width="400"/></td>
+    <td><b>CIFAR-10</b><br><sub>With Nonlinear Decoder</sub><br><img src="assets/Cifar_Decoder.png" width="400"/></td>
+  </tr>
+</table>
 
 And all of this is done **without using backpropagation**.
 
----
+🤝 How to Contribute
 
-## 🤝 How to Contribute
+Want to experiment with this or try on your own dataset? Here's how to get started:
 
-Want to experiment with this? You can:
+Clone the repo:
 
-* Clone the repo
-* Add loaders under `data/` for your dataset (CIFAR-10, SVHN, etc.)
-* Copy `run_mnist_dt.py` and modify it into `run_cifar_dt.py`
-* Make sure your image size and input channels match the CNN in `DenoiseBlock`
+git clone https://github.com/ANKITSANJYAL/NoPropagation.git
+cd NoPropagation
 
-If you have improvements, open a PR — clean modularity is maintained intentionally.
+Add a custom dataset loader under data/ (check mnist_loader.py or cifar_loader.py as reference)
 
----
+Write a training script under experiments/ (copy run_mnist_dt.py or run_cifar_dt.py)
 
-## 🔭 Next Steps for Me
+Adjust the model config (e.g. num_input_channels, num_classes, embedding_dim) in the script
 
-This was the MNIST milestone. Next:
+Run your experiment:
 
-1. Add support for **CIFAR-10** and **SVHN**
-2. Add **ReLU/decoder** variants from the full paper (for nonlinear denoising)
-3. Add **backprop baselines** for comparison
-4. Add **WandB tracking** for clean experiment logging
-5. (Optional) Benchmark training speed and memory vs backprop
+PYTHONPATH=. python experiments/your_script.py
+
+This codebase is modular by design — you can plug in new datasets, decoders, schedulers, or compare against backprop baselines.
+
+Open a PR if you add a new experiment, optimizer, or decoder variant. Let's keep improving this together.
+
+🔭 Next Steps for Me
+
+So far:
+
+✅ MNIST baseline and decoder versions implemented
+
+✅ CIFAR-10 baseline and decoder version trained
+
+Coming up:
+
+Add support for SVHN and TinyImageNet
+
+Add backprop baselines for direct comparison
+
+Integrate WandB tracking for better logs and visualizations
+
+Try alternative denoising blocks or noise schedules
+
+(Optional) Benchmark memory + training speed vs traditional backprop
+
 
 ---
 
